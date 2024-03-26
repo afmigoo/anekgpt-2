@@ -56,6 +56,7 @@ class AnekDataset(Dataset):
     def __getitem__(self, index) -> tuple[torch.Tensor, torch.Tensor]:
         # encode every character to an integer
         anek = self.aneks[index]
+        anek = anek[:max_anek_size - len(end_flag) - len(begin_flag)]
         used_len = len(begin_flag) + len(anek) + len(end_flag)
         anek = "{beg}{anek}{end}{filler}".format(
             beg = begin_flag,
