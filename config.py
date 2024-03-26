@@ -19,3 +19,4 @@ train_config = Trainer.get_default_config()
 train_config.learning_rate = 5e-4 # many possible options, see the file
 train_config.max_iters = 70
 train_config.batch_size = 6
+train_config.num_workers = 2
