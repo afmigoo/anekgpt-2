@@ -6,12 +6,12 @@ from anekdataset import itos_file, stoi_file
 from train import model_path
 from config import (
     max_anek_size,
-    model_config,
+    get_model_config,
     begin_flag
 )
 
 def main():
-    model = GPT(model_config)
+    model = GPT(get_model_config())
     model.load_state_dict(torch.load(model_path))
 
     with open(stoi_file, 'r', encoding='utf-8') as f:

@@ -10,16 +10,20 @@ logging.basicConfig(
 )
 
 from anekdataset import AnekDataset
-from config import model_config, train_config, max_anek_count
+from config import (
+    get_model_config,
+    get_train_config,
+    max_anek_count
+)
 
 model_path = "data/model.pt"
 
 def main():
     logger = logging.getLogger("trainer")
 
-    model = GPT(model_config)
+    model = GPT(get_model_config())
     train_dataset = AnekDataset('anekdots.txt', max_anek_count)
-    trainer = Trainer(train_config, model, train_dataset)
+    trainer = Trainer(get_train_config(), model, train_dataset)
 
     def batch_end_callback(trainer: Trainer):
         if trainer.iter_num % 10 == 0:
