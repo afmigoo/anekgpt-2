@@ -15,8 +15,6 @@ def get_model_config():
     model_config.block_size = 256
     return model_config
 
-#############################
-
 def get_train_config():
     train_config = Trainer.get_default_config()
     train_config.learning_rate = 5e-4 # many possible options, see the file
