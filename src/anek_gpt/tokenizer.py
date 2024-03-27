@@ -20,7 +20,7 @@ def _count_char_freq(seq: str, freq_d: dict[str, int]) -> None:
                 freq_d[seq[i:j]] = 1
 
 def token_grade(token: str, freq: int) -> float:
-    return freq * (len(token) ** 2)
+    return freq * (len(token) ** 3)
 
 def _get_best_tokens(freq_d: dict[str, int]) -> list[str]:
     # adding minimal tokens
