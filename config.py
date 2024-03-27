@@ -7,6 +7,7 @@ data_dir = Path('data')
 raw_data = data_dir.joinpath('anekdots.txt')
 stoi_file = data_dir.joinpath('stoi.json')
 itos_file = data_dir.joinpath('itos.json')
+model_path = data_dir.joinpath('model.pt')
 # special tokens
 begin_tkn = '[<BEG>]'
 end_tkn = '[<END>]'

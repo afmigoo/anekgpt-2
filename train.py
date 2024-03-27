@@ -17,10 +17,9 @@ from config import (
     get_model_config,
     get_train_config,
     max_anek_count,
-    raw_data
+    raw_data,
+    model_path
 )
-
-model_path = "data/model.pt"
 
 def main():
     model = GPT(get_model_config())
