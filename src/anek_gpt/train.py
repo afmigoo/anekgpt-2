@@ -30,7 +30,6 @@ def main(model = None):
                 loss=trainer.loss.item()
             ))
             # save the latest model
-            print("Saving the model...")
             torch.save(model.state_dict(), model_path)
         if trainer.iter_num % 5000 == 0:
             generate.main(model)

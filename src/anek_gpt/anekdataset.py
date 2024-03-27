@@ -4,7 +4,7 @@ import torch
 
 from . import tokenizer
 from . lookup import stoi
-from .config import begin_tkn, end_tkn, get_model_config
+from .config import begin_tkn, end_tkn, get_model_config, max_anek_size
 
 def load_raw(file_name):
     with open(file_name, 'r', encoding='utf-8') as f:
