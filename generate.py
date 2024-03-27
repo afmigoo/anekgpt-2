@@ -34,6 +34,7 @@ def main(model = None):
         if done:
             break
         anek = new_anek
+    print()
 
 if  __name__ == "__main__":
     main()
