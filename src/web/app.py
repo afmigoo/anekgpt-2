@@ -23,6 +23,6 @@ def gen():
         prompt = begin_tkn
     
     result = generate.generate(model=static_model.model, prompt=prompt)
-    if not prompt in result:
+    if not prompt in result or prompt == result or result.endswith(begin_tkn):
         return jsonify({'result': False})
     return jsonify({'result': result})

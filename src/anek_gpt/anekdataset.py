@@ -4,7 +4,7 @@ import torch
 
 from . import tokenizer
 from . lookup import stoi
-from .config import begin_tkn, end_tkn, max_anek_size
+from .config import begin_tkn, end_tkn, get_model_config
 
 def load_raw(file_name):
     with open(file_name, 'r', encoding='utf-8') as f:
@@ -14,38 +14,28 @@ def load_raw(file_name):
 class AnekDataset(Dataset):
     def __init__(self, file_name: str, max_aneks: int = -1):
         # init
-        self.aneks = []
+        self.data = None
+        self.block_size = get_model_config().block_size
         self.__load_dataset(file_name, max_aneks)
 
     def __load_dataset(self, file_name: str | Path, max_aneks: int):
         with open(file_name, 'r', encoding='utf-8') as f:
-            anek = ''
-            for line in f:
-                if line =='\n':
-                    if anek:
-                        if len(anek) < max_anek_size:
-                            self.aneks.append(anek)
-                        anek = ''
-                        if max_aneks > 0 and \
-                           len(self.aneks) >= max_aneks:
-                            break
-                    continue
-                anek += line
-            print(f"Loaded {len(self.aneks)} anekdotes")
+            self.data = f.read()
+            print(f"Loaded {len(self.data)} chars")
+            print("Tokenizing data...")
+            self.data = self.data.replace('\n\n', begin_tkn)
+            self.data = tokenizer.encode_from_str(self.data)
+            print(f"{len(self.data)} total tokens.")
 
     def __getitem__(self, index) -> tuple[torch.Tensor, torch.Tensor]:
-        # encode every character to an integer
-        anek = self.aneks[index]
-        encoded = tokenizer.encode_from_str(anek, normalize_len=True)
-        # add special tokens
-        encoded = [stoi[begin_tkn]] + encoded[:-2] + [stoi[end_tkn]]
-        # convert to tensors
-        x = torch.tensor(encoded[:-1], dtype=torch.long)
-        y = torch.tensor(encoded[1:], dtype=torch.long)
+        x = torch.tensor(self.data[index:index + self.block_size], 
+                         dtype=torch.long)
+        y = torch.tensor(self.data[index + 1:index + self.block_size + 1],
+                         dtype=torch.long)
         return x, y
     
     def __len__(self) -> int:
-        return len(self.aneks)
+        return len(self.data) - self.block_size
 
 if __name__ == '__main__':
     d = AnekDataset('anekdots.txt', -1)

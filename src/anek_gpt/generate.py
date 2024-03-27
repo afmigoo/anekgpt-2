@@ -33,6 +33,8 @@ def main(model = None):
         new_anek = generate(model=model, prompt=anek)
         print(new_anek.removeprefix(anek), end='' , flush=True)
         anek = new_anek
+        if anek.endswith(begin_tkn):
+            break
     print()
 
 if  __name__ == "__main__":

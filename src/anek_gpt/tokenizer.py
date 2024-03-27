@@ -69,7 +69,7 @@ def _encode_seq(text: str) -> list[int]:
     pass
 
 def encode_from_str(text: str, normalize_len: bool = False) -> list[int]:
-    text = text.lower()#.split(' ')
+    text = text.lower()
     #text = word_tokenize(text)
     int_tokens = []
     i = 0
@@ -82,8 +82,6 @@ def encode_from_str(text: str, normalize_len: bool = False) -> list[int]:
             i += 1
             continue
         int_tokens.append(lookup.stoi[longest_tkn])
-        if len(int_tokens) >= max_anek_size - 2:
-            break
         i += len(longest_tkn)
     if normalize_len:
         int_tokens += [lookup.stoi[filler]] * (max_anek_size - len(int_tokens))

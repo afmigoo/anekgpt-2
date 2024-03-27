@@ -15,14 +15,13 @@
                 fetch('gen?prompt=' + encodeURIComponent(prompt))
                     .then(response => response.json())
                     .then(data => {
+                        // Display the current prompt
+                        document.getElementById('result').innerHTML = prompt;
                         if (data.result === false) {
                             // Stop iterating if the API returns {'result': false}
-                            document.getElementById('result').innerHTML = prompt + '\nAPI call completed.';
                         } else {
                             // Update the prompt with the API response
                             prompt = data.result;
-                            // Display the current prompt
-                            document.getElementById('result').innerHTML = 'Current prompt: ' + prompt;
                             // Call the API again
                             makeApiCall();
                         }
