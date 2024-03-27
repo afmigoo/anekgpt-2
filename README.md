@@ -7,6 +7,6 @@
     ```
 2. Install dependencies
     ```shell
-    pip3 install numpy
+    pip3 install numpy nltk tqdm
     cd src/minGPT && pip3 install -e . && cd ../..
     ```

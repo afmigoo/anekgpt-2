@@ -2,6 +2,7 @@ from mingpt.model import GPT
 from mingpt.trainer import Trainer
 import torch
 import logging
+from datetime import datetime
 
 logging.basicConfig(
     level=logging.DEBUG,
@@ -14,19 +15,24 @@ from anekdataset import AnekDataset
 from config import (
     get_model_config,
     get_train_config,
-    max_anek_count
+    max_anek_count,
+    raw_data
 )
 
 model_path = "data/model.pt"
 
 def main():
     model = GPT(get_model_config())
-    train_dataset = AnekDataset('anekdots.txt', max_anek_count)
+    train_dataset = AnekDataset(raw_data, max_anek_count)
     trainer = Trainer(get_train_config(), model, train_dataset)
 
     def batch_end_callback(trainer: Trainer):
-        if trainer.iter_num % 10 == 0:
-            print(f"iter {trainer.iter_num}: train loss {trainer.loss.item():.5f}")
+        if trainer.iter_num % 50 == 0:
+            print("{time} iter {iter}: train loss {loss:.5f}".format(
+                time=datetime.now().time().strftime('%H:%M:%S'),
+                iter=trainer.iter_num,
+                loss=trainer.loss.item()
+            ))
         if trainer.iter_num % 100 == 0:
             # save the latest model
             print("Saving the model...")
