@@ -14,14 +14,14 @@ end_tkn = 'Всё!'
 filler = '⚧'
 max_tkn_len = 10
 
-max_anek_size = 128
+max_anek_size = 90
 max_anek_count = -1
 
 def get_model_config():
     model_config = GPT.get_default_config()
     model_config.model_type = 'gpt2'
-    model_config.vocab_size = 2048
-    model_config.block_size = 128
+    model_config.vocab_size = 256
+    model_config.block_size = 90
     return model_config
 
 def get_train_config():

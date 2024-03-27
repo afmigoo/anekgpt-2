@@ -10,7 +10,6 @@ from config import (
 )
 import tokenizer
 
-logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger("AnekDataset")
 
 class AnekDataset(Dataset):
