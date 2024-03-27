@@ -1,19 +1,11 @@
-from mingpt.model import GPT
 from mingpt.trainer import Trainer
-import torch
-import logging
 from datetime import datetime
+from mingpt.model import GPT
+import torch
 
-logging.basicConfig(
-    level=logging.DEBUG,
-    format="%(asctime)s [%(levelname)s] %(message)s",
-    datefmt="%H:%M:%S"
-)
-logger = logging.getLogger("trainer")
-
-from anekdataset import AnekDataset
-import generate
-from config import (
+from .anekdataset import AnekDataset
+from . import generate
+from .config import (
     get_model_config,
     get_train_config,
     max_anek_count,
@@ -21,8 +13,12 @@ from config import (
     model_path
 )
 
-def main():
-    model = GPT(get_model_config())
+def main(model = None):
+    if model is None:
+        model = GPT(get_model_config())
+        if model_path.is_file():
+            model.load_state_dict(torch.load(model_path))
+    
     train_dataset = AnekDataset(raw_data, max_anek_count)
     trainer = Trainer(get_train_config(), model, train_dataset)
 

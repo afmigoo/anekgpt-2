@@ -1,17 +1,15 @@
-from json import load, dump
-from pathlib import Path
-from pprint import pprint
 from nltk.tokenize import word_tokenize
+from json import dump
 from tqdm import tqdm
 
-from config import (
+from .config import (
     max_tkn_len,
     max_anek_size,
     filler, begin_tkn, end_tkn,
     get_model_config,
     stoi_file, itos_file, raw_data
 )
-import lookup
+from . import lookup
 
 def _count_char_freq(seq: str, freq_d: dict[str, int]) -> None:
     for i in range(len(seq)):
@@ -22,7 +20,7 @@ def _count_char_freq(seq: str, freq_d: dict[str, int]) -> None:
                 freq_d[seq[i:j]] = 1
 
 def token_grade(token: str, freq: int) -> float:
-    return freq * (len(token) ** 3)
+    return freq * (len(token) ** 2)
 
 def _get_best_tokens(freq_d: dict[str, int]) -> list[str]:
     # adding minimal tokens
@@ -58,6 +56,7 @@ def form_lookup_dicts(text: str) -> None:
     with open(itos_file, 'w', encoding='utf-8') as f: 
         dump({i: tkn for i, tkn in enumerate(tokens)}, 
              f, ensure_ascii=False, indent=1)
+    lookup.reload()
 
 def encode(text_tokens: list[str]) -> list[int]:
     return [lookup.stoi[tkn] for tkn in text_tokens]
@@ -97,7 +96,6 @@ def main():
     with open(raw_data) as f:
         text = f.read()
     form_lookup_dicts(text)
-    lookup.reload()
 
     print(decode(encode_from_str('мир жвачка!!')))
 

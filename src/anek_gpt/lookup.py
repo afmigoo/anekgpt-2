@@ -1,5 +1,6 @@
 from json import load
-from config import stoi_file, itos_file
+
+from .config import stoi_file, itos_file
 
 stoi = itos = None
 

@@ -1,0 +1,49 @@
+<html data-bs-theme="dark">
+    <head>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        
+    <script>
+        // JavaScript function to call the Flask API iteratively
+        function callApiIteratively() {
+            let prompt = ''; // Start with an empty string
+
+            // Function to make the API call
+            function makeApiCall() {
+                fetch('/gen?prompt=' + encodeURIComponent(prompt))
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.result === false) {
+                            // Stop iterating if the API returns {'result': false}
+                            document.getElementById('result').innerHTML = prompt + '\nAPI call completed.';
+                        } else {
+                            // Update the prompt with the API response
+                            prompt = data.result;
+                            // Display the current prompt
+                            document.getElementById('result').innerHTML = 'Current prompt: ' + prompt;
+                            // Call the API again
+                            makeApiCall();
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
+
+            // Start the iterative API call
+            makeApiCall();
+        }
+
+        // Call the function when the page loads
+        window.onload = callApiIteratively;
+    </script>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="#">KalamburGPT</a>
+            </div>
+          </nav>
+        <div style="width: 60%; margin: auto; max-width: 700px; min-width: 200px;">
+            <p id="result"></p>
+        </div>
+    </body>
+</html>

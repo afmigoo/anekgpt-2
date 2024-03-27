@@ -1,16 +1,15 @@
 from torch.utils.data.dataset import Dataset
-from json import dump
 from pathlib import Path
 import torch
-import logging
 
-from config import (
-    max_anek_size,
-    begin_tkn, end_tkn, filler
-)
-import tokenizer
+from . import tokenizer
+from . lookup import stoi
+from .config import begin_tkn, end_tkn
 
-logger = logging.getLogger("AnekDataset")
+def load_raw(file_name):
+    with open(file_name, 'r', encoding='utf-8') as f:
+        raw = f.read()
+    return raw
 
 class AnekDataset(Dataset):
     def __init__(self, file_name: str, max_aneks: int = -1):
@@ -37,10 +36,11 @@ class AnekDataset(Dataset):
         # encode every character to an integer
         anek = self.aneks[index]
         encoded = tokenizer.encode_from_str(anek, normalize_len=True)
+        # add special tokens
+        encoded = [stoi[begin_tkn]] + encoded[:-2] + [stoi[end_tkn]]
         # convert to tensors
         x = torch.tensor(encoded[:-1], dtype=torch.long)
         y = torch.tensor(encoded[1:], dtype=torch.long)
-        #print(tokenizer.decode_to_str(encoded))
         return x, y
     
     def __len__(self) -> int:

@@ -3,7 +3,7 @@ from mingpt.model import GPT
 from mingpt.trainer import Trainer
 
 # files
-data_dir = Path('data')
+data_dir = Path(__file__).parent.joinpath('data')
 raw_data = data_dir.joinpath('anekdots.txt')
 stoi_file = data_dir.joinpath('stoi.json')
 itos_file = data_dir.joinpath('itos.json')
@@ -12,7 +12,7 @@ model_path = data_dir.joinpath('model.pt')
 begin_tkn = '[^]'
 end_tkn = '[;]'
 filler = '⚧'
-max_tkn_len = 3
+max_tkn_len = 12
 
 max_anek_size = 90
 max_anek_count = -1
