@@ -24,15 +24,9 @@ def main(model = None):
     
     anek = begin_tkn
     print(anek)
-    done = False
     for _ in range(max_anek_size):
         new_anek = generate(anek)
-        if end_tkn in new_anek:
-            new_anek = new_anek.split(end_tkn)[0] + end_tkn
-            done = True
         print(new_anek.removeprefix(anek), end='' , flush=True)
-        if done:
-            break
         anek = new_anek
     print()
 
