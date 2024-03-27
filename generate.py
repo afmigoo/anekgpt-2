@@ -2,11 +2,11 @@ from json import load
 import torch
 from mingpt.model import GPT
 
-from train import model_path
 from config import (
     max_anek_size,
     get_model_config,
-    begin_tkn, end_tkn
+    begin_tkn, end_tkn,
+    model_path
 )
 import tokenizer
 
