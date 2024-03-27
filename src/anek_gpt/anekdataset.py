@@ -4,7 +4,7 @@ import torch
 
 from . import tokenizer
 from . lookup import stoi
-from .config import begin_tkn, end_tkn
+from .config import begin_tkn, end_tkn, max_anek_size
 
 def load_raw(file_name):
     with open(file_name, 'r', encoding='utf-8') as f:
@@ -23,7 +23,8 @@ class AnekDataset(Dataset):
             for line in f:
                 if line =='\n':
                     if anek:
-                        self.aneks.append(anek)
+                        if len(anek) < max_anek_size:
+                            self.aneks.append(anek)
                         anek = ''
                         if max_aneks > 0 and \
                            len(self.aneks) >= max_aneks:

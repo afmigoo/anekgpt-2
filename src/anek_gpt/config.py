@@ -19,15 +19,15 @@ max_anek_count = -1
 
 def get_model_config():
     model_config = GPT.get_default_config()
-    model_config.model_type = 'gpt2'
-    model_config.vocab_size = 256
+    model_config.model_type = 'gpt-mini'
+    model_config.vocab_size = 512
     model_config.block_size = 90
     return model_config
 
 def get_train_config():
     train_config = Trainer.get_default_config()
-    train_config.learning_rate = 5e-4 # many possible options, see the file
+    train_config.learning_rate = 6e-4 # many possible options, see the file
     train_config.max_iters = 2000
-    train_config.batch_size = 1
+    train_config.batch_size = 32
     train_config.num_workers = 2
     return train_config
