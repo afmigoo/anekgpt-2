@@ -4,13 +4,13 @@ from src.anek_gpt import config
 from src.anek_gpt import train
 
 def main(ask=False):
-    raw_data = anekdataset.load_raw(config.raw_data)
-
     if ask:
         print('Do you want to overwrite the model? (type \'o\')')
         print('Do you want to continue training the model? (type \'c\')')
         print('Type anything else tp abort.')
         ask = input()
+
+    raw_data = anekdataset.load_raw(config.raw_data)
 
     if ask == 'o':
         print("Forming lookup dicts...")

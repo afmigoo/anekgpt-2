@@ -11,7 +11,6 @@ model_path = data_dir.joinpath('model.pt')
 # special tokens
 begin_tkn = '[anek]'
 end_tkn = '[;]'
-filler = '⚧'
 max_tkn_len = 12
 
 max_anek_size = 90

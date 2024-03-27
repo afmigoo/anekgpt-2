@@ -5,7 +5,7 @@ from tqdm import tqdm
 from .config import (
     max_tkn_len,
     max_anek_size,
-    filler, begin_tkn, end_tkn,
+    begin_tkn, end_tkn,
     get_model_config,
     stoi_file, itos_file, raw_data
 )
@@ -25,7 +25,7 @@ def token_grade(token: str, freq: int) -> float:
 def _get_best_tokens(freq_d: dict[str, int]) -> list[str]:
     # adding minimal tokens
     best = [tkn for tkn in freq_d.keys() if len(tkn) == 1]
-    best.extend([filler, begin_tkn, end_tkn])
+    best.extend([begin_tkn, end_tkn])
     # grading
     pairs = [(token_grade(tkn, freq), tkn)
              for tkn, freq in freq_d.items()
@@ -40,7 +40,7 @@ def _get_best_tokens(freq_d: dict[str, int]) -> list[str]:
 def form_lookup_dicts(text: str) -> None:
     """Saves dicts to `stoi_file` and `itos_file`. Bruteforce :("""
     # adding special tokens
-    substr_counter = {k: 1 for k in [' ', '\n', filler, begin_tkn, end_tkn]}
+    substr_counter = {k: 1 for k in [' ', '\n', begin_tkn, end_tkn]}
     # tokenizing
     #text = word_tokenize(text, language='russian')
     text = text.split(' ')
@@ -68,7 +68,7 @@ def _encode_seq(text: str) -> list[int]:
     """encodes sequence that doesnt contain spaces"""
     pass
 
-def encode_from_str(text: str, normalize_len: bool = False) -> list[int]:
+def encode_from_str(text: str) -> list[int]:
     text = text.lower()
     #text = word_tokenize(text)
     int_tokens = []
@@ -83,8 +83,6 @@ def encode_from_str(text: str, normalize_len: bool = False) -> list[int]:
             continue
         int_tokens.append(lookup.stoi[longest_tkn])
         i += len(longest_tkn)
-    if normalize_len:
-        int_tokens += [lookup.stoi[filler]] * (max_anek_size - len(int_tokens))
     return int_tokens
 
 def decode_to_str(int_tokens: list[int]) -> str:
