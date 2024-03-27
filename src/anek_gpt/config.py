@@ -13,14 +13,14 @@ begin_tkn = '[anek]'
 end_tkn = '[;]'
 max_tkn_len = 10
 
-max_anek_size = 64
+max_anek_size = 32
 max_anek_count = -1
 
 def get_model_config():
     model_config = GPT.get_default_config()
     model_config.model_type = 'gpt-mini'
     model_config.vocab_size = 4096
-    model_config.block_size = 64
+    model_config.block_size = 32
     return model_config
 
 def get_train_config():
