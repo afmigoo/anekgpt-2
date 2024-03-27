@@ -11,7 +11,7 @@ from config import (
     get_model_config,
     stoi_file, itos_file, raw_data
 )
-from lookup import stoi, itos
+import lookup
 
 def _count_char_freq(seq: str, freq_d: dict[str, int]) -> None:
     for i in range(len(seq)):
@@ -60,10 +60,10 @@ def form_lookup_dicts(text: str) -> None:
              f, ensure_ascii=False, indent=1)
 
 def encode(text_tokens: list[str]) -> list[int]:
-    return [stoi[tkn] for tkn in text_tokens]
+    return [lookup.stoi[tkn] for tkn in text_tokens]
 
 def decode(int_tokens: list[int]) -> list[str]:
-    return [itos[tkn] for tkn in int_tokens]
+    return [lookup.itos[tkn] for tkn in int_tokens]
 
 def _encode_seq(text: str) -> list[int]:
     """encodes sequence that doesnt contain spaces"""
@@ -77,18 +77,18 @@ def encode_from_str(text: str, normalize_len: bool = False) -> list[int]:
     while i <= len(text):
         longest_tkn = ''
         for j in range(i + 1, min(i + max_tkn_len, len(text)) + 1):
-            if text[i:j] in stoi and len(text[i:j]) > len(longest_tkn):
+            if text[i:j] in lookup.stoi and len(text[i:j]) > len(longest_tkn):
                 longest_tkn = text[i:j]
         if not longest_tkn:
             i += 1
             continue
-        int_tokens.append(stoi[longest_tkn])
+        int_tokens.append(lookup.stoi[longest_tkn])
         if len(int_tokens) >= max_anek_size - 2:
             break
         i += len(longest_tkn)
-    int_tokens = [stoi[begin_tkn]] + int_tokens + [stoi[end_tkn]]
+    int_tokens = [lookup.stoi[begin_tkn]] + int_tokens + [lookup.stoi[end_tkn]]
     if normalize_len:
-        int_tokens += [stoi[filler]] * (max_anek_size - len(int_tokens))
+        int_tokens += [lookup.stoi[filler]] * (max_anek_size - len(int_tokens))
     return int_tokens
 
 def decode_to_str(int_tokens: list[int]) -> str:
@@ -98,6 +98,7 @@ def main():
     with open(raw_data) as f:
         text = f.read()
     form_lookup_dicts(text)
+    lookup.reload()
 
     print(decode(encode_from_str('мир жвачка!!')))
 
