@@ -86,7 +86,6 @@ def encode_from_str(text: str, normalize_len: bool = False) -> list[int]:
         if len(int_tokens) >= max_anek_size - 2:
             break
         i += len(longest_tkn)
-    int_tokens = [lookup.stoi[begin_tkn]] + int_tokens + [lookup.stoi[end_tkn]]
     if normalize_len:
         int_tokens += [lookup.stoi[filler]] * (max_anek_size - len(int_tokens))
     return int_tokens

@@ -9,10 +9,10 @@ stoi_file = data_dir.joinpath('stoi.json')
 itos_file = data_dir.joinpath('itos.json')
 model_path = data_dir.joinpath('model.pt')
 # special tokens
-begin_tkn = 'Анекдот:\n'
-end_tkn = 'Всё!'
+begin_tkn = '[^]'
+end_tkn = '[;]'
 filler = '⚧'
-max_tkn_len = 10
+max_tkn_len = 3
 
 max_anek_size = 90
 max_anek_count = -1
@@ -28,6 +28,6 @@ def get_train_config():
     train_config = Trainer.get_default_config()
     train_config.learning_rate = 5e-4 # many possible options, see the file
     train_config.max_iters = 2000
-    train_config.batch_size = 4
+    train_config.batch_size = 1
     train_config.num_workers = 2
     return train_config

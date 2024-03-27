@@ -11,11 +11,13 @@ from config import (
 import tokenizer
 
 def main(model = None):
-    model = GPT(get_model_config()) if model is None else model
-    model.load_state_dict(torch.load(model_path))
+    if model is None:
+        model = GPT(get_model_config())
+        model.load_state_dict(torch.load(model_path))
 
     def generate(prompt=begin_tkn, steps=1, do_sample=True):
-        x = torch.tensor(tokenizer.encode_from_str(prompt), dtype=torch.long)[None,...].to('cpu')
+        encoded = tokenizer.encode_from_str(prompt)
+        x = torch.tensor(encoded, dtype=torch.long)[None,...].to('cpu')
 
         # forward the model `steps` times to get samples, in a batch
         y = model.generate(x, max_new_tokens=steps, do_sample=do_sample) #top_k=40
