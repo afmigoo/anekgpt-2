@@ -2,6 +2,7 @@ from src.anek_gpt import anekdataset
 from src.anek_gpt import tokenizer
 from src.anek_gpt import config
 from src.anek_gpt import train
+from src.anek_gpt.config import model_path
 
 def main(ask=False):
     if ask:
@@ -16,6 +17,7 @@ def main(ask=False):
         print("Forming lookup dicts...")
         tokenizer.form_lookup_dicts(raw_data)
         model = None
+        model_path.unlink()
     elif ask == 'c':
         from src.anek_gpt.static_model import model
         model = model
@@ -24,7 +26,7 @@ def main(ask=False):
         return
     
     print("Training...")
-    train.main()
+    train.main(model)
 
 if __name__ == '__main__':
     main(ask=True)
