@@ -6,7 +6,7 @@ from train import model_path
 from config import (
     max_anek_size,
     get_model_config,
-    begin_tkn
+    begin_tkn, end_tkn
 )
 import tokenizer
 
@@ -24,9 +24,15 @@ def main():
     
     anek = begin_tkn
     print(anek)
+    done = False
     for _ in range(max_anek_size):
         new_anek = generate(anek)
+        if end_tkn in new_anek:
+            new_anek = new_anek.split(end_tkn)[0] + end_tkn
+            done = True
         print(new_anek.removeprefix(anek), end='' , flush=True)
+        if done:
+            break
         anek = new_anek
 
 if  __name__ == "__main__":

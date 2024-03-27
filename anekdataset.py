@@ -41,6 +41,7 @@ class AnekDataset(Dataset):
         # convert to tensors
         x = torch.tensor(encoded[:-1], dtype=torch.long)
         y = torch.tensor(encoded[1:], dtype=torch.long)
+        #print(tokenizer.decode_to_str(encoded))
         return x, y
     
     def __len__(self) -> int:
