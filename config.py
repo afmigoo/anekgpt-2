@@ -9,8 +9,8 @@ stoi_file = data_dir.joinpath('stoi.json')
 itos_file = data_dir.joinpath('itos.json')
 model_path = data_dir.joinpath('model.pt')
 # special tokens
-begin_tkn = '[<BEG>]'
-end_tkn = '[<END>]'
+begin_tkn = 'Анекдот:\n'
+end_tkn = 'Всё!'
 filler = '⚧'
 max_tkn_len = 10
 
