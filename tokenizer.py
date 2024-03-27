@@ -94,9 +94,12 @@ def encode_from_str(text: str, normalize_len: bool = False) -> list[int]:
 def decode_to_str(int_tokens: list[int]) -> str:
     return ''.join(decode(int_tokens))
 
-if __name__ == '__main__':
+def main():
     with open(raw_data) as f:
         text = f.read()
     form_lookup_dicts(text)
 
     print(decode(encode_from_str('мир жвачка!!')))
+
+if __name__ == '__main__':
+    main()

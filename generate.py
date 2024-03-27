@@ -10,8 +10,8 @@ from config import (
 )
 import tokenizer
 
-def main():
-    model = GPT(get_model_config())
+def main(model = None):
+    model = GPT(get_model_config()) if model is None else model
     model.load_state_dict(torch.load(model_path))
 
     def generate(prompt=begin_tkn, steps=1, do_sample=True):

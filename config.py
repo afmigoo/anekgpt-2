@@ -13,20 +13,20 @@ end_tkn = '[<END>]'
 filler = '⚧'
 max_tkn_len = 10
 
-max_anek_size = 256
+max_anek_size = 128
 max_anek_count = -1
 
 def get_model_config():
     model_config = GPT.get_default_config()
     model_config.model_type = 'gpt2'
-    model_config.vocab_size = 1500
-    model_config.block_size = 256
+    model_config.vocab_size = 2048
+    model_config.block_size = 128
     return model_config
 
 def get_train_config():
     train_config = Trainer.get_default_config()
     train_config.learning_rate = 5e-4 # many possible options, see the file
-    train_config.max_iters = 200
+    train_config.max_iters = 2000
     train_config.batch_size = 4
     train_config.num_workers = 2
     return train_config
