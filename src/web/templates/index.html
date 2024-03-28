@@ -16,7 +16,7 @@
                     .then(response => response.json())
                     .then(data => {
                         // Display the current prompt
-                        document.getElementById('result').innerHTML = prompt;
+                        document.getElementById('result').innerHTML = prompt.replace(/(?:\r\n|\r|\n)/g, "<br>");
                         if (data.result === false) {
                             // Stop iterating if the API returns {'result': false}
                         } else {
