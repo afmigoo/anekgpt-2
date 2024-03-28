@@ -11,12 +11,12 @@ def load_raw(file_name):
     return raw
 
 class AnekDataset(Dataset):
-    def __init__(self, file_name: str, max_aneks: int = -1):
+    def __init__(self, file_name: str):
         # initializing the dataset
         self.data: list[str] = None
         self.block_size = get_model_config().block_size
         # loading data from file
-        self.__load_dataset(file_name, max_aneks)
+        self.__load_dataset(file_name)
 
     def __load_dataset(self, file_name: str | Path):
         # loads data from file to self.data

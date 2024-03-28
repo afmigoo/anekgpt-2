@@ -13,15 +13,13 @@ model_path = data_dir.joinpath('model.pt')
 begin_tkn = '[anek]'
 # token maximum length
 max_tkn_len = 10
-# token anekdote size and model's block_size
-max_anek_size = 16
 
 def get_model_config():
     model_config = GPT.get_default_config()
     model_config.model_type = 'gpt-mini'
     # amount of tokens
-    model_config.vocab_size = 4096
-    model_config.block_size = max_anek_size
+    model_config.vocab_size = 8192
+    model_config.block_size = 16
     return model_config
 
 def get_train_config():

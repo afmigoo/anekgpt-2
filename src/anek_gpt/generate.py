@@ -2,7 +2,6 @@ from mingpt.model import GPT
 import torch
 
 from .config import (
-    max_anek_size,
     get_model_config,
     begin_tkn,
     model_path
@@ -34,8 +33,8 @@ def main(model = None):
     # start with separator token
     anek = begin_tkn
     print(anek)
-    # generating `max_anek_size` tokens
-    for _ in range(max_anek_size):
+    # generating `block_size` tokens
+    for _ in range(get_model_config().block_size):
         # generating next token
         new_anek = generate(model=model, prompt=anek)
         # printing only last recieved token

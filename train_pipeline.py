@@ -17,7 +17,7 @@ if ask == 'o':
     tokenizer.form_lookup_dicts(raw_data)
     # if overwrite then delete prev model
     model = None
-    model_path.unlink()
+    model_path.unlink(missing_ok=True)
 elif ask == 'c':
     # if continue training then load prev model
     from src.anek_gpt.static_model import model

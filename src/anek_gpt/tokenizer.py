@@ -22,7 +22,7 @@ def _count_char_freq(seq: str, freq_d: dict[str, int]) -> None:
 
 def token_grade(token: str, freq: int) -> float:
     # grading tokens, we want longer tokens to be more valuable
-    return freq * (len(token) ** 3)
+    return freq * (len(token) ** 1)
 
 def _get_best_tokens(freq_d: dict[str, int]) -> list[str]:
     # getting the best graded tokens

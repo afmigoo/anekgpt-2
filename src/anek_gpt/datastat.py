@@ -3,30 +3,22 @@ def main():
     from tqdm import tqdm
 
     from .config import raw_data
-    from .anekdataset import AnekDataset
+    from .anekdataset import AnekDataset, load_raw
     from . import tokenizer
-    from . import lookup
 
+    tokenizer.form_lookup_dicts(load_raw(raw_data))
     ad = AnekDataset(raw_data)
 
     lenghts = []
-    tkn_lenghts = []
     n_bins = 20
 
-    for anek in tqdm(ad):
-        anek = list(map(int, anek[0][1:]))
-        try:
-            end_idx = anek.index(lookup.stoi[end_tkn])
-        except ValueError:
-            end_idx = -1
-        anek = anek[:end_idx]
-        tkn_lenghts.append(len(anek))
+    for i in tqdm(range(len(ad)), total=len(ad)):
+        anek = list(map(int, ad[i][0]))
         anek = tokenizer.decode_to_str(list(map(int, anek)))
         lenghts.append(len(anek))
 
-    fig, axs = plt.subplots(1, 2, sharey=True, tight_layout=True)
-    axs[0].hist(lenghts, bins=n_bins)
-    axs[1].hist(tkn_lenghts, bins=n_bins)
+    fig, axs = plt.subplots(1, 1, sharey=True, tight_layout=True)
+    axs.hist(lenghts, bins=n_bins)
     plt.show()
 
 if __name__ == '__main__':
