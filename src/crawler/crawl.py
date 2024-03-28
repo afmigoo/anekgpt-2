@@ -5,9 +5,8 @@ from tqdm import tqdm
 
 from bs4 import BeautifulSoup
 
-#from src.anek_gpt.config import raw_data
+from src.anek_gpt.config import raw_data
 
-TMP = 'data.txt'
 PAGE = 'https://nekdo.ru/short/{page}/'
 
 def get_page(page: int, max_tries: int = 10) -> str:
@@ -38,7 +37,7 @@ def parse_aneks(html: str) -> list[str]:
     return aneks
 
 def write_aneks(aneks: list[str]):
-    with open(TMP, 'a', encoding='utf-8') as f:
+    with open(raw_data, 'a', encoding='utf-8') as f:
         f.write('\n\n'.join(aneks))
 
 def main():
@@ -46,10 +45,10 @@ def main():
     TOTAL_PAGES = 1805
     total_aneks = 0
 
-    print(f'Overwrite {TMP}?')
+    print(f'Overwrite {raw_data}?')
     ans = input()
     if ans == 'y':
-        with open(TMP, 'w') as f:
+        with open(raw_data, 'w') as f:
             f.write('')
 
     pb = tqdm(list(range(SPART_PAGE, TOTAL_PAGES + 1)),

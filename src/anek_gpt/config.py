@@ -4,7 +4,7 @@ from mingpt.trainer import Trainer
 
 # files
 data_dir = Path(__file__).parent.joinpath('data')
-raw_data = data_dir.joinpath('anekdots.txt')
+raw_data = data_dir.joinpath('aneks.txt')
 stoi_file = data_dir.joinpath('stoi.json')
 itos_file = data_dir.joinpath('itos.json')
 model_path = data_dir.joinpath('model.pt')
