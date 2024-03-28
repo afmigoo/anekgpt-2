@@ -4,29 +4,29 @@ from src.anek_gpt import config
 from src.anek_gpt import train
 from src.anek_gpt.config import model_path
 
-def main(ask=False):
-    if ask:
-        print('Do you want to overwrite the model? (type \'o\')')
-        print('Do you want to continue training the model? (type \'c\')')
-        print('Type anything else tp abort.')
-        ask = input()
+raw_data = anekdataset.load_raw(config.raw_data)
 
-    raw_data = anekdataset.load_raw(config.raw_data)
+print('Do you want to overwrite the model? (type \'o\')')
+print('Do you want to continue training the model? (type \'c\')')
+print('Type anything else tp abort.')
+ask = input()
 
-    if ask == 'o':
-        print("Forming lookup dicts...")
-        tokenizer.form_lookup_dicts(raw_data)
-        model = None
-        model_path.unlink()
-    elif ask == 'c':
-        from src.anek_gpt.static_model import model
-        model = model
-    else:
-        print('Aborting')
-        return
-    
-    print("Training...")
-    train.main(model)
+if ask == 'o':
+    # forming lookup dicts for the tokenizer
+    print("Forming lookup dicts...")
+    tokenizer.form_lookup_dicts(raw_data)
+    # if overwrite then delete prev model
+    model = None
+    model_path.unlink()
+elif ask == 'c':
+    # if continue training then load prev model
+    from src.anek_gpt.static_model import model
+    model = model
+else:
+    # else exit
+    print('Aborting')
+    exit()
 
-if __name__ == '__main__':
-    main(ask=True)
+# start training
+print("Training...")
+train.main(model)

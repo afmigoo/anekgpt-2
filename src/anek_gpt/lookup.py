@@ -2,9 +2,13 @@ from json import load
 
 from .config import stoi_file, itos_file
 
+# global lookup dicts
+# stoi = string_to_integer
+# itos = integer_to_string
 stoi = itos = None
 
 def reload():
+    # reloads lookup dicts from files
     global stoi, itos
 
     if stoi_file.is_file():

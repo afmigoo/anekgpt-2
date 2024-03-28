@@ -1,6 +1,6 @@
 from flask import (
     Flask,
-    request, abort,
+    request,
     jsonify,
     render_template
 )

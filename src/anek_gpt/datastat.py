@@ -2,7 +2,7 @@ def main():
     import matplotlib.pyplot as plt
     from tqdm import tqdm
 
-    from .config import raw_data, end_tkn
+    from .config import raw_data
     from .anekdataset import AnekDataset
     from . import tokenizer
     from . import lookup

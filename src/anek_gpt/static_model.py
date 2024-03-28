@@ -6,6 +6,7 @@ from .config import (
     model_path
 )
 
+# global model object for flask to import
 model = None
 
 def load():

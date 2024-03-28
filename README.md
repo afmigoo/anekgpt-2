@@ -1,12 +1,33 @@
 # GPT генератор анекдотов
 
-## Quick start
-1. (Optional) Activate virtual env
+## Как запустить
+1. (Опционально) Активируйте виртуальное окружение
     ```shell
     python3 -m venv venv && source venv/bin/activate
     ```
-2. Install dependencies
+2. Установите зависимости
     ```shell
     pip3 install -r requirements.txt
-    cd src/minGPT && pip3 install -e . && cd ../..
     ```
+3. Запустите
+    ```shell
+    python3 main.py
+    ```
+    Запуститься flask сайт с генерацией анекдотов.
+
+## О модели
+- Модель взята отсюда: https://github.com/karpathy/minGPT
+    - версия *gpt-mini*
+    - n_layer=6, n_head=6, n_embd=192
+    - 3.46млн параметров
+- Тренирована на CPU с нуля на коротких анекдотах отсюда: https://nekdo.ru/short/
+- Токены - частотные буквосочетания.
+    - У каждого буквосочетания длиной <= 10 считалась частотность `freq` (кол-во).
+    - Рейтинг каждого буквосочетания:
+    
+        `grade = freq * (tkn_len ** 2)`
+
+        Где  
+        `freq` = сколько раз это сочетание попалось в датасете  
+        `tkn_len` = длина буквосочетания
+    - В конце в словарь токенов брались буквосочетания с самым высоким рейтингом. 

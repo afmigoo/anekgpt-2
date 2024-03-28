@@ -8,20 +8,21 @@ from . import generate
 from .config import (
     get_model_config,
     get_train_config,
-    max_anek_count,
     raw_data,
     model_path
 )
 
 def main(model = None):
+    # loading model if None
     if model is None:
         model = GPT(get_model_config())
         if model_path.is_file():
             model.load_state_dict(torch.load(model_path))
-    
-    train_dataset = AnekDataset(raw_data, max_anek_count)
+    # loading dataset
+    train_dataset = AnekDataset(raw_data)
+    # initializing model trainer
     trainer = Trainer(get_train_config(), model, train_dataset)
-
+    # callback function
     def batch_end_callback(trainer: Trainer):
         if trainer.iter_num % 1000 == 0:
             print("{time} iter {iter}: train loss {loss:.5f}".format(
@@ -33,8 +34,9 @@ def main(model = None):
             torch.save(model.state_dict(), model_path)
         if trainer.iter_num % 5000 == 0:
             generate.main(model)
-
+    # setting callback function
     trainer.set_callback('on_batch_end', batch_end_callback)
+    # training
     trainer.run()
     
     print(f"iter {trainer.iter_num}: train loss {trainer.loss.item():.5f}")
