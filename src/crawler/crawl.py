@@ -16,8 +16,8 @@ def get_page(page: int, max_tries: int = 10) -> str:
 
     try:
         resp = requests.get(PAGE.format(page=page), timeout=10)
-    except requests.ConnectTimeout:
-        print(f"Timed out: {resp}")
+    except requests.Timeout:
+        print(f"Timed out")
         sleep(10)
         return get_page(page=page, max_tries=max_tries-1)
     if not resp.ok:
@@ -42,7 +42,7 @@ def write_aneks(aneks: list[str]):
         f.write('\n\n'.join(aneks))
 
 def main():
-    SPART_PAGE = 471
+    SPART_PAGE = 1186
     TOTAL_PAGES = 1805
     total_aneks = 0
 
@@ -52,8 +52,9 @@ def main():
         with open(TMP, 'w') as f:
             f.write('')
 
-    pb = tqdm(range(SPART_PAGE, TOTAL_PAGES + 1),
-              initial=SPART_PAGE)
+    pb = tqdm(list(range(SPART_PAGE, TOTAL_PAGES + 1)),
+              initial=SPART_PAGE,
+              total=TOTAL_PAGES)
     for i in pb:
         html = get_page(i)
         aneks = parse_aneks(html)
