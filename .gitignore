@@ -1,7 +1,6 @@
 venv
 
 *.pyc
-*.pt
 
 src/anek_gpt/data/*.json
 src/anek_gpt/data/*.gz
