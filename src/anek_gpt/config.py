@@ -19,7 +19,7 @@ def get_model_config():
     model_config.model_type = 'gpt-mini'
     # amount of tokens
     model_config.vocab_size = 8192
-    model_config.block_size = 16
+    model_config.block_size = 18
     return model_config
 
 def get_train_config():
