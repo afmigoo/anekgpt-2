@@ -24,17 +24,17 @@ def generate(model=None, prompt=begin_tkn, steps=1, do_sample=True):
     
     return tokenizer.decode_to_str(list(map(int, y[0])))
 
-def main(model = None):
+def main(model = None, start_prompt = begin_tkn):
     # load model if None
     if model is None:
         model = GPT(get_model_config())
         model.load_state_dict(torch.load(model_path))
     
-    # start with separator token
-    anek = begin_tkn
+    anek = start_prompt
     print(anek)
+    block_size = get_model_config().block_size
     # generating `block_size` tokens
-    for _ in range(get_model_config().block_size):
+    for _ in range(block_size):
         # generating next token
         new_anek = generate(model=model, prompt=anek)
         # printing only last recieved token

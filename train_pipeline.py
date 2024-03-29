@@ -1,10 +1,11 @@
 from src.anek_gpt import anekdataset
+from src.anek_gpt import textdataset
 from src.anek_gpt import tokenizer
 from src.anek_gpt import config
 from src.anek_gpt import train
 from src.anek_gpt.config import model_path
 
-raw_data = anekdataset.load_raw(config.raw_data)
+raw_data = textdataset.load_raw(config.raw_data)
 
 print('Do you want to overwrite the model? (type \'o\')')
 print('Do you want to continue training the model? (type \'c\')')

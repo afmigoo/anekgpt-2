@@ -73,10 +73,12 @@ def encode(text_tokens: list[str]) -> list[int]:
 def decode(int_tokens: list[int]) -> list[str]:
     return [lookup.itos[tkn] for tkn in int_tokens]
 
-def encode_from_str(text: str) -> list[int]:
+def encode_from_str(text: str, progres_bar: bool = False) -> list[int]:
     # takes a string and encodes it with longest possible tokens
     text = text.lower()
     int_tokens = []
+    if progres_bar:
+        pb = tqdm(total=len(text), unit='ch', desc='encoding')
     i = 0
     while i <= len(text):
         longest_tkn = ''
@@ -88,6 +90,8 @@ def encode_from_str(text: str) -> list[int]:
             continue
         int_tokens.append(lookup.stoi[longest_tkn])
         i += len(longest_tkn)
+        if progres_bar:
+            pb.update(len(longest_tkn))
     return int_tokens
 
 def decode_to_str(int_tokens: list[int]) -> str:

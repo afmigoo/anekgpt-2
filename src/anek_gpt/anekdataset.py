@@ -13,7 +13,7 @@ def load_raw(file_name):
 class AnekDataset(Dataset):
     def __init__(self, file_name: str):
         # initializing the dataset
-        self.data: list[str] = None
+        self.data: list[int] = None
         self.block_size = get_model_config().block_size
         # loading data from file
         self.__load_dataset(file_name)

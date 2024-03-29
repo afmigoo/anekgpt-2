@@ -4,6 +4,7 @@ from mingpt.model import GPT
 import torch
 
 from .anekdataset import AnekDataset
+from .textdataset import TextDataset
 from . import generate
 from .config import (
     get_model_config,
@@ -19,12 +20,12 @@ def main(model = None):
         if model_path.is_file():
             model.load_state_dict(torch.load(model_path))
     # loading dataset
-    train_dataset = AnekDataset(raw_data)
+    train_dataset = TextDataset(raw_data)
     # initializing model trainer
     trainer = Trainer(get_train_config(), model, train_dataset)
     # callback function
     def batch_end_callback(trainer: Trainer):
-        if trainer.iter_num % 1000 == 0:
+        if trainer.iter_num % 100 == 0:
             print("{time} iter {iter}: train loss {loss:.5f}".format(
                 time=datetime.now().time().strftime('%H:%M:%S'),
                 iter=trainer.iter_num,
@@ -32,8 +33,8 @@ def main(model = None):
             ))
             # save the latest model
             torch.save(model.state_dict(), model_path)
-        if trainer.iter_num % 5000 == 0:
-            generate.main(model)
+        if trainer.iter_num % 500 == 0:
+            generate.main(model, 'тогда')
     # setting callback function
     trainer.set_callback('on_batch_end', batch_end_callback)
     # training
